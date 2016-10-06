@@ -2,38 +2,23 @@ var keys = require('./keys.js');
 var request = require('request');
 var twitter = require("twitter");
 var spotify = require('spotify');
-var operator = process.argv[2];
 var defaultMovie = 'Mr. Nobody';
 var defaultSong = 'The Sign';
+var operator = process.argv[2];
+var fs = require('fs');
 
 switch (operator) {
     case 'my-tweets':
-
-        var params = { screen_name: 'chrisxjacobi' };
-        client.get('statuses/user_timeline', params, function(error, tweets, response) {
-            if (!error) {
-                console.log(tweets);
-            }
-        });
+        console.log();
         break;
 
     case 'spotify-this-song':
-        var spotify = require('spotify');
-
-        spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
-            if (err) {
-                console.log('Error occurred: ' + err);
-                return console.log()
-            }
-
-            // Do something with 'data' 
-        });
+        console.log();
         break;
 
     case 'movie-this':
 
         var movieName = process.argv[3];
-
         var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&tomatoes=true&r=json';
 
         console.log(queryUrl);
@@ -50,13 +35,20 @@ switch (operator) {
                 console.log("Starring: " + JSON.parse(body)["Actors"])
                 console.log("Rotten Tomatoes rating: " + JSON.parse(body)["tomatoRating"])
                 console.log("Rotten Tomatoes info: " + JSON.parse(body)["tomatoURL"])
-            } else {
-                console.log(defaultMovie);
+            } if(error) {
+                console.log('working');
             }
         });
         break;
 
-     case 'do-what-it-says': 
+    case 'do-what-it-says':
 
-     	fs.readFile("./random.txt", "utf8", function(error, data) 
-}
+        fs.readFile("./random.txt", "utf8", function(error, data) {
+                console.log(data);
+
+                var dataArr = data.split(',');
+
+                console.log(dataArr);
+            })
+
+        }
