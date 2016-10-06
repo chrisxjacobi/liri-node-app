@@ -2,7 +2,6 @@ var keys = require('./keys.js');
 var request = require('request');
 var twitter = require("twitter");
 var spotify = require('spotify');
-var defaultSong = 'The Sign';
 var operator = process.argv[2];
 var fs = require('fs');
 
@@ -16,29 +15,46 @@ switch (operator) {
             access_token_secret: keys.twitterKeys.access_token_secret
         });
 
+
+        client.get('statuses/user_timeline', {
+            screen_name: 'chrisxjacobi',
+            count: 20
+        }, function(error, tweets, response) {
+            console.log(tweets[0].created_at);
+            console.log(tweets[0].text);
+        });
+
         break;
 
     case 'spotify-this-song':
-        spotify.search({ type: 'track', query: defaultSong }, function(err, data) {
+
+        var track = process.argv[3];
+        var defaultTrack = 'Ace of Base - The Sign';
+        spotify.search({ type: 'track', query: track }, function(err, data) {
             if (err) {
                 console.log('Error occurred: ' + err);
                 return;
             }
-            /* else {
-            	console.log("Artist: " + data.artist)
-            	console.log("Song: " + data.track)
-            	console.log("Link: " + )
-            	console.log("Album: " + )
-            }
-            */
+            console.log("Artist: " + data.tracks.items[0].artists[0].name);
+            console.log("Track: " + data.tracks.items[0].name);
+            console.log("Preview link: " + data.tracks.items[0].preview_url);
+            console.log("Album: " + data.tracks.items[0].album.name);
+
         });
+
         break;
 
     case 'movie-this':
 
         var movieName = process.argv[3];
         var defaultMovie = 'Mr. Nobody';
+
+        if (movieName == undefined) {
+            movieName = defaultMovie;
+        }
+
         var queryUrl = 'http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&tomatoes=true&r=json';
+
 
         request(queryUrl, function(error, response, body) {
 
@@ -52,9 +68,6 @@ switch (operator) {
                 console.log("Starring: " + JSON.parse(body)["Actors"])
                 console.log("Rotten Tomatoes rating: " + JSON.parse(body)["tomatoRating"])
                 console.log("Rotten Tomatoes info: " + JSON.parse(body)["tomatoURL"])
-            }
-            if (movieName === undefined) {
-                movieName = defaultMovie;
             }
 
         });
