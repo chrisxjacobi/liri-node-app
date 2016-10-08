@@ -67,3 +67,12 @@ Sun Aug 24 22:34:07 +0000 2014: RT @HEELZiggler: Yo @mikethemiz Princess Leia ca
 but she said youre really good at being handed roles/rolls
 Tue Aug 19 01:04:55 +0000 2014: The REAL champ is here! #BrockLesnar #RAW
 Mon Aug 04 20:14:45 +0000 2014: RT @ErwinCenter: @chrisxjacobi we don't want to start a war, but we can't DM you... #OPENFIRE!
+/usr/local/bin/node /Users/chrisxjacobi/Desktop/liri-node-app/liri.js do-what-it-says
+
+/usr/local/bin/node /Users/chrisxjacobi/Desktop/liri-node-app/liri.js do-what-it-says
+
+/usr/local/bin/node /Users/chrisxjacobi/Desktop/liri-node-app/liri.js do-what-it-says
+
+/usr/local/bin/node /Users/chrisxjacobi/Desktop/liri-node-app/liri.js do-what-it-says
+
+/usr/local/bin/node /Users/chrisxjacobi/Desktop/liri-node-app/liri.js do-what-it-says

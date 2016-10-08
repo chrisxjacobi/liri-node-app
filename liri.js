@@ -4,6 +4,8 @@ var operator = process.argv[2];
 var fs = require('fs');
 
 
+
+
 switch (operator) {
     case 'my-tweets':
         var Twitter = require("twitter");
@@ -30,19 +32,27 @@ switch (operator) {
 
     case 'spotify-this-song':
 
-        var track = process.argv[3];
-        var defaultTrack = "Ace of Base - The Sign";
-        spotify.search({ type: 'track', query: track }, function(err, data) {
-            if (err) {
-                console.log('Error occurred: ' + err);
-                return;
-            }
-            console.log("Artist: " + data.tracks.items[0].artists[0].name);
-            console.log("Track: " + data.tracks.items[0].name);
-            console.log("Preview link: " + data.tracks.items[0].preview_url);
-            console.log("Album: " + data.tracks.items[0].album.name);
+        function spotifyThis() {
 
-        });
+            var track = process.argv[3];
+            var defaultTrack = "Ace of Base - The Sign";
+
+            if (track == undefined) {
+                track = defaultTrack;
+            }
+            spotify.search({ type: 'track', query: track }, function(err, data) {
+                if (err) {
+                    console.log('Error occurred: ' + err);
+                    return;
+                }
+                console.log("Artist: " + data.tracks.items[0].artists[0].name);
+                console.log("Track: " + data.tracks.items[0].name);
+                console.log("Preview link: " + data.tracks.items[0].preview_url);
+                console.log("Album: " + data.tracks.items[0].album.name);
+            });
+        }
+
+        spotifyThis();
 
         break;
 
@@ -78,11 +88,10 @@ switch (operator) {
     case 'do-what-it-says':
 
         fs.readFile("./random.txt", "utf8", function(error, data) {
-            console.log(data);
 
             var dataArr = data.split(',');
-
-            console.log(dataArr);
+            process.argv[3] = dataArr[1];
+            spotifyThis();
         })
 
 }
