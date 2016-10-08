@@ -1,6 +1,4 @@
-var keys = require('./keys.js');
 var request = require('request');
-var twitter = require("twitter");
 var spotify = require('spotify');
 var operator = process.argv[2];
 var fs = require('fs');
@@ -8,6 +6,9 @@ var fs = require('fs');
 
 switch (operator) {
     case 'my-tweets':
+        var Twitter = require("twitter");
+        var keys = require('./keys.js');
+
         var client = new Twitter({
             consumer_key: keys.twitterKeys.consumer_key,
             consumer_secret: keys.twitterKeys.consumer_secret,
@@ -15,13 +16,14 @@ switch (operator) {
             access_token_secret: keys.twitterKeys.access_token_secret
         });
 
-
         client.get('statuses/user_timeline', {
             screen_name: 'chrisxjacobi',
             count: 20
         }, function(error, tweets, response) {
-            console.log(tweets[0].created_at);
-            console.log(tweets[0].text);
+            for (i = 0; i < tweets.length; i++) {
+                console.log(tweets[i].created_at);
+                console.log(tweets[i].text);
+            }
         });
 
         break;
@@ -29,7 +31,7 @@ switch (operator) {
     case 'spotify-this-song':
 
         var track = process.argv[3];
-        var defaultTrack = 'Ace of Base - The Sign';
+        var defaultTrack = "Ace of Base - The Sign";
         spotify.search({ type: 'track', query: track }, function(err, data) {
             if (err) {
                 console.log('Error occurred: ' + err);
